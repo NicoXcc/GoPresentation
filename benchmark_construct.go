@@ -1,0 +1,1 @@
+func BenchmarkXxx(*testing.B)

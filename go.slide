@@ -1,0 +1,260 @@
+Programming in Go
+Its all about simplicity
+05 Apr 2018
+
+Vikash Kumar Singh
+Sr. Engineer, Lowe's India
+vikash.singh@lowes.com
+
+* Fuel to your curiosity
+
+.image docker.png _ 300
+.image coreOS.png _ 150
+.image kubernets.png _ 300
+
+: Computers are like everywhere and it is integral part of what most us do everyday, 
+: and Go is going to be right in there as the language that shapes the future. 
+: Its modern its clean and pretty well documented. 
+: Its being used by some proper exciting projects at the moment. 
+: There are many cool projects which is being developed through GO like Docker 
+: one of the hottest technology which we all must have heard about 
+: is built on GO and so is Core OS which is built to provide infrastructure 
+: for clustered deployments and Not to mention the famous the famous open source 
+: system Kubernetes designed by google for automating maintaining and scaling 
+: containerized application is built on GO.
+
+* What is Go?
+
+Go is often referred to as a “simple” programming language,
+a language that can be learned in a few hours if you already know another language. There 
+are just 20 ~ 25 keywords.
+
+*Where*it*shines*?*
+
+: There are certain reasons behind the growing popularity of go. The first is
+
+- Binaries
+: - Go generates binaries for your applications with all the dependencies built-in. 
+: since the binaries can be executable itself it removes the need for you to install runtimes that are necessary for running your application.
+: This eases the task of deploying applications as deployments have no pre-requisites
+
+- Powerful standard library
+: — - - - - - - - - - - - - -  - - - - 
+: Go comes with a powerful and rich standard library.
+: SO any package which we expect from 3rd party providers may actually be in the standard 
+: library itself. Like testing, benchmarking, profiling, hints for code defects etc.
+
+- Static Typing
+:  - - - - - - - - - - - - - - - - - 
+: - This can avoid the problems that one faces in dynamically typed languages,
+: where you discover the issues only when the code is executed.
+: static typed languages are those in which type checking is done at compile-time,
+: whereas dynamic typed languages are those in which type checking is done at run-time.
+- Concurrency Support
+: - - - - - - - - - - - - - - - - - 
+: - If you have programmed concurrency in other languages right from scratch,
+: you understand that it is quite complex to do so.
+: Go Concurrency primitives via go routines and channels makes concurrent programming easy.
+: We’ll come to know about it later in the slide.
+
+- Go tools
+: - - - - - - - - - - - - - - - - - 
+: test, documentation, benchmarking.
+: - Go Language brings Unit Testing right into the language itself.
+: It provides a simple mechanism to write your unit tests in parallel with your code.
+: The tooling also provides support to understand code coverage by your tests,
+: benchmarking tests and writing example code that is used in generating your code documentation.
+
+
+
+* Language Constructs
+*variables*
+.play -edit variables.go
+
+: Go is strongly typed language with type inference.
+: Every Go program starts with a package declaration, here package main holds
+: a special significance as by this we tell the compiler to compile this as a standalone executable 
+: and not as a shared library.
+: package Main in conjunction with func main makes the program stand alone and executable.
+: At package level variable declaration should have var keyword while 
+: inside a function declaring variable can be more concise
+
+* Language Constructs
+*functions*
+.play -edit functions.go
+
+: GO promotes modular programming by a small packages of functions being composed as applications.
+: In go Functions are first class citizens. We can pass functions as arguments assign function to variables.
+: Here again we have package main and func main but rather if we want to make a library out of it which 
+: makes available a Converter function we can do it in three steps.
+: idiomatic way of returning values from a function where the last parameter is error. 
+: when we initialize and declare we use semi colon and equals to.
+: If error is nil it indicates success of the function.
+
+* Language Constructs
+*Loops*
+forget about while and do-while
+- simple pre and post statements
+.play -edit loops.go /START OMIT/,/END OMIT/
+: Go has got only one keyword for looping which is "for"
+: It can be used with simple pre, post statements i.e. fro loop
+: It can be used only with conditional logic i.e. while loop
+: It can also be used to range over a list of values kind for "for each"
+* Language Constructs
+- while loop in disguise
+.play -edit loops2.go /START OMIT/,/END OMIT/
+- range over list, slice, or maps
+.play -edit loops1.go /START OMIT/,/END OMIT/
+: Its a 
+
+* Language Constructs
+: Strictly speaking, there is only one way to pass parameters in Go - by value.
+: Every time a variable is passed as parameter,
+: a new copy of the variable is created and passed to called function or method.
+: The copy is allocated at a different memory address.
+*pass*by*value*
+.play -edit pass_by_value.go /START OMIT/,/END OMIT/
+* Language Constructs
+: In case a variable is passed by pointer,
+: a new copy of pointer to the same memory address is created.
+*pass*by*reference*
+.play -edit pass_by_reference.go /START OMIT/,/END OMIT/
+
+* Concurrency
+*what*is*concurrency*?*
+Making progress on more than one task simultaneously is known as concurrency.
+*Go's*take*
+Do not communicate by sharing memory; instead, share memory by communicating.
+
+: - In mainstream programming language,
+: when you think of concurrent execution of code,
+: you mostly think of a bunch of threads running in parallel performing some kind of a complex operation.
+: Then, most often than not, you would need to share data structures\variables\memory\
+: between the different threads.
+: You do this by either locking the piece of memory so that not two
+: threads can access\write to it at the same time,
+: or you just let it roam free and hope for the best.
+: - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+: - Instead of locking variables to share memory,
+: Go allows you to communicate (or send) the value stored in your
+: variable from one thread to another (in reality,
+: it’s not exactly a thread but let’s just think of it as a thread for now).
+: The default behavior is that both the thread sending the data and the one
+: receiving the data will wait till the value reaches it’s destination.
+
+* Go routines
+- lightweight threads
+- independently executing function
+- own call stack
+- very cheap. Its practical to have hundreds of thousands of go routine
+- one thread in a program can have thousands of goroutines
+
+* 
+*Echo*Server*
+
+: An echo server will listen on a port for any connection that comes in
+: and writes back the same data that it gets.
+: Copy copies from src to dst until either EOF OR connection is closed is reached
+: on src or an error occurs
+.play -edit echo_server.go /START OMIT/,/END OMIT/
+
+* Boring Google Search
+: though these all functions are mutually exclusive, they still run in sequence one after the another
+: just to club the results together.
+: Any idea what we can do here to make it more efficient?
+: We need to make it parallel/concurrent, and some sort of communication
+: to identify when the search is finished on all the three channels.
+: - - - - -
+: go routines can help but we need some communication to club the results together.
+: comes in channel
+.code boring_google_search.go /START OMIT/,/END OMIT/
+* Boring Google Search
+.play boring_google_search_play.go /START OMIT/,/END OMIT/
+
+* Channel
+A channel in Go provides a connection between two goroutines, allowing them to communicate.
+Declaring and initializing.
+.code channel_initialization.go
+Sending on a channel.
+The "arrow" indicates the direction of data flow.
+.code channel_send.go
+Receiving from a channel.
+.code channel_receive.go
+A sender and receiver must both be ready to play their part in the communication,
+otherwise we wait until they are.(REMEMBER: Share by communicating)
+
+* Little Interesting Google Search
+.play little_interesting_search.go /START OMIT/,/END OMIT/
+
+* Go Tools
+
+: Go comes with rich tool set inbuilt into the language.
+: gofmt : it formats or makes the code look pretty.
+: goimports : which adds a missing import.
+: go get : fetches a go code and installs it in your GOPATH bin directory
+* 
+*test*
+go by default comes with a testing package. It is intended to be used in concert with the
+'go test' command, which automates the execution of any function of the form
+.code test_construct.go
+: To write a new test suite, create a file whose name ends _test.go that contains the TestXxx functions as described here.
+: Put the file in the same package as the one being tested.
+: The file will be excluded from regular package builds
+: but will be included when the “go test” command is run.
+*benchmark*
+.code benchmark_construct.go
+: Functions of the form
+: are considered benchmarks, and are executed by the "go test" command when its -bench flag is provided.
+: The Go testing package contains a benchmarking facility that can be used to examine 
+: the performance of your Go code.
+: Lets see this with an example of the same Google Search code
+: I have defined a Unit Test case with the name "TestGoogle" and a bench marking test with the name 
+: "BenchmarkGoogle" both are prefixed with BEnchmark and Test respectively.
+: The instructions given in benchmark is to loop N number of times and call the same function so that it can be timed 
+: reliably.
+: The output shows it took approx 80ms to loop once.
+Sample
+.code benchmark_sample.go
+Output
+.code benchmark_sample_output.go
+: The benchmark function must run the target code b.N times.
+: During benchmark execution, b.N is adjusted until the benchmark function
+: lasts long enough to be timed reliably.
+
+* 
+
+*pprof*
+
+pprof lets you collect CPU profiles, traces, and heap profiles for your Go programs.
+Though possibilities are limitless but at a very basic level It helps in finding possible bottlenecks in program in terms of CPU usage and Memory usage.
+
+
+: last in the presentation but extremely helpful tool
+: Lets quickly check this with example.
+: Here we have a function to find the nth fibonacci number in through recursion.
+: Its complexity is O(2^N) i.e. it will run the instructions 2^N no time to find the nth fibonacci number OR it will use 2^N CPU cycles
+: to find the Nth fibnacci number.
+: go test -bench=BenchmarkExponential
+: The web view shows that the exponentialFibonacci function 76% of entire CPU tine just to find 25th no in the series
+: To check the bottleneck at a more granular level lets "list exponentialFibonacci" 
+: go test -bench=BenchmarkRecursive -cpuprofile=cpu-exponential.prof
+: lets use another pprof command to find the most expensive operation
+: list exponentialFibonacci
+: go tool pprof cpu-exponential.prof
+: here we see that possible bottleneck is the recursion, To do away with this bottleneck I have another function "linearFibonacci"
+: which will perform the same operation in linear time. 
+: Another inference that we can draw is, since the complexity of linear fibonacci in O(n) then to find the  2^25 approx 33 millionth record
+: it will take the same time.
+
+* References
+
+https://github.com/golang/talks
+https://www.toptal.com/back-end/server-side-io-performance-node-php-java-go
+https://blog.golang.org/cover	
+https://tqdev.com/2017-gophercon-2017-videos-online
+https://vimeo.com/53221560
+*go tools*
+https://github.com/campoy/go-tooling-workshop
+*profiling*
+https://blog.golang.org/profiling-go-programs
+https://blog.intelligentbee.com/2017/08/01/profiling-web-applications-golang/
